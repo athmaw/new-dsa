@@ -1,0 +1,14 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "explorer.confirmDragAndDrop": false,
+    "terminal.integrated.initialHint": false,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.runInTerminal": true,
+    "code-runner.showExecutionMessage": false,
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.executorMap": {
+        "c": "cls ; gcc $fileName -o $fileNameWithoutExt.exe ; if ($?) { .\\$fileNameWithoutExt.exe }"
+    },
+    "C_Cpp_Runner.showCompilationTime": false
+}
