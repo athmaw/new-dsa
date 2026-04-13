@@ -41,6 +41,7 @@ typedef struct{
     Car Chosen;
     int currCoins;
     int maxCoins;
+    int points;         // --- NEW: Added points for the leaderboard ---
     Item heldItems[3];
 } Player;
 
@@ -66,7 +67,7 @@ void insertFirst(int *L, VirtualList *R, Player elem);
 void insertLast(int *L, VirtualList *R, Player elem);
 void insertPos(int *L, VirtualList *R, Player elem);
 void insertSorted(int *L, VirtualList *R, Player elem);
-void delete(int *L, VirtualList *R, String ID);
+void deleteNode(int *L, VirtualList *R, String ID);
 void deleteAllOccurrence(int *L, VirtualList *R, String ID);
 void display(int L, VirtualList R);
 
@@ -79,17 +80,24 @@ int main() {
         RL.count = 0;
     
         Player p1;
-        strcpy(p1.account.ID, "2345");
-        strcpy(p1.account.name, "Mario");
-        p1.currCoins = 10;
+        strcpy(p1.account.ID, "0001");
+        strcpy(p1.account.name, "Toad");
+        p1.points = 15;
 
         Player p2;
-        strcpy(p2.account.ID, "0021");
-        strcpy(p2.account.name, "Luigi");
-        p2.currCoins = 5;
+        strcpy(p2.account.ID, "0002");
+        strcpy(p2.account.name, "Daisy");
+        p2.points = 12;
 
-        insertFirst(&RL.LIST, &R, p1);
-        insertFirst(&RL.LIST, &R, p2);
+        Player p3;
+        strcpy(p3.account.ID, "0003");
+        strcpy(p3.account.name, "Waluigi");
+        p3.points = 10;
+        
+        insertSorted(&RL.LIST, &R, p2);
+        insertSorted(&RL.LIST, &R, p1);
+        insertSorted(&RL.LIST, &R, p3);
+        
         display(RL.LIST, R);
     
         return 0;
@@ -120,6 +128,7 @@ int allocSpace(VirtualList *R) {
 
 void deallocSpace(VirtualList *R, int Ndex) {
     R->R[Ndex].next = R->Avail;
+    R->Avail = Ndex;
 }
 
 void insertFirst(int *L, VirtualList *R,  Player elem) {
@@ -178,14 +187,14 @@ void insertSorted(int *L, VirtualList *R, Player elem) {
 
     if(Ndex != -1) {
         R->R[Ndex].racer = elem;
-
-        if(*L == -1 || R->R[*L].racer.currCoins >= elem.currCoins) {
+        
+        if(*L == -1 || R->R[*L].racer.points < elem.points) {
             R->R[Ndex].next = *L;
             *L = Ndex;
         } else{
             int i = *L;
-
-            while(R->R[i].next != -1 && R->R[R->R[i].next].racer.currCoins < elem.currCoins) {
+            
+            while(R->R[i].next != -1 && R->R[R->R[i].next].racer.points >= elem.points) {
                 i = R->R[i].next;
             }
             R->R[Ndex].next = R->R[i].next;
@@ -194,7 +203,7 @@ void insertSorted(int *L, VirtualList *R, Player elem) {
     }
 }
 
-void delete(int *L, VirtualList *R, String ID) {
+void deleteNode(int *L, VirtualList *R, String ID) {
     int *trav;
 
     for(trav = L; *trav != -1 && strcmp(R->R[*trav].racer.account.ID, ID) != 0; trav = &(R->R[*trav].next)) {}
@@ -223,13 +232,17 @@ void deleteAllOccurrence(int *L, VirtualList *R, String ID) {
 
 void display(int L, VirtualList R) {
     int trav;
+    int position = 1;
 
-    printf("\n--- Current Race Standings ---\n");
+    printf("\n--- Mario Kart Final Leaderboard ---\n");
+    printf("Pos | %-12s | Points\n", "Character");
+    printf("------------------------------------\n");
+    
     for(trav = L; trav != -1; trav = R.R[trav].next) {
-        printf("ID: #%s | Name: %10s | Coins: %d\n", 
-            R.R[trav].racer.account.ID, 
+        printf(" %2d | %-12s | %2d\n", 
+            position++, 
             R.R[trav].racer.account.name, 
-            R.R[trav].racer.currCoins);
+            R.R[trav].racer.points);
     }
-    printf("------------------------------\n");
+    printf("------------------------------------\n");
 }
