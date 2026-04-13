@@ -74,6 +74,7 @@ void display(int L, VirtualList R);
 // add enqueue and dequeue
 // add other 2 deletion
 // use doubly linked list
+// add error catching
 
 int main() {
         VirtualList R;
