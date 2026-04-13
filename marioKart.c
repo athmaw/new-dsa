@@ -41,7 +41,7 @@ typedef struct{
     Car Chosen;
     int currCoins;
     int maxCoins;
-    int points;         // --- NEW: Added points for the leaderboard ---
+    int points;
     Item heldItems[3];
 } Player;
 
@@ -78,21 +78,21 @@ int main() {
         initList(&R);
         RL.LIST = -1;
         RL.count = 0;
-    
+        
         Player p1;
-        strcpy(p1.account.ID, "0001");
-        strcpy(p1.account.name, "Toad");
-        p1.points = 15;
-
+        strcpy(p1.account.ID, "0322");
+        strcpy(p1.account.name, "Waluigi");
+        p1.points = 10;
+    
         Player p2;
-        strcpy(p2.account.ID, "0002");
-        strcpy(p2.account.name, "Daisy");
-        p2.points = 12;
+        strcpy(p2.account.ID, "0213");
+        strcpy(p2.account.name, "Toad");
+        p2.points = 15;
 
         Player p3;
-        strcpy(p3.account.ID, "0003");
-        strcpy(p3.account.name, "Waluigi");
-        p3.points = 10;
+        strcpy(p3.account.ID, "00124");
+        strcpy(p3.account.name, "Daisy");
+        p3.points = 12;
         
         insertSorted(&RL.LIST, &R, p2);
         insertSorted(&RL.LIST, &R, p1);
